@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MyUtils</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string-array name="activityNames">
+        <item>DataBinding</item>
+
+        <item>仿抖音音乐裁剪</item>
+    </string-array>
 </resources>

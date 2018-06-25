@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="cutmusic_layout_backGround">#cd151517</color>
+    <color name="cutmusic_paint_white">#4DFFFFFF</color>
+    <color name="cutmusic_paint_blue">#FF52D3FF</color>
+    <color name="cutmusic_textcolor">#FF999CB0</color>
 </resources>
