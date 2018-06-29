@@ -6,8 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activity.MusicCutActivity">
-<com.example.myutils.Views.MusicCutLikeDouYin.CutMusicRecycleView
-    android:id="@+id/"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"></com.example.myutils.Views.MusicCutLikeDouYin.CutMusicRecycleView>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@color/md3"
+        android:text="召唤控件" />
+
+    <com.example.myutils.Views.MusicCutLikeDouYin.CutMusicRecycleView
+        android:id="@+id/music_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.example.myutils.Views.MusicCutLikeDouYin.CutMusicRecycleView>
 </LinearLayout>
