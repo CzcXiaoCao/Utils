@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.meicam.wangyi.custom.CustomCutMusicItemView
+    <com.example.myutils.Views.MusicCutLikeDouYin.CustomCutMusicItemView
         android:id="@+id/view_musicItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

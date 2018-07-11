@@ -8,10 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.example.myutils.Utils.LogUtil;
 import com.example.myutils.Utils.ScreenUtil;
 
 
@@ -34,7 +36,6 @@ public class CutMusicRecycleView extends RecyclerView {
     float getX;
     int totalSSS = 0;
     CustomLinearLayoutManager linearLayoutManager;
-    CutMusicRecycleViewAdapter mAdapter;
     ScrollChangedListener mScrollChangedListener;
     //余数，用于计算滑动距离
     int yushu;
@@ -44,30 +45,25 @@ public class CutMusicRecycleView extends RecyclerView {
     //控制动画是start还是resume
     boolean isAnimaPause = false;
     long timeLineLength;
-
-    public void setFromDraftNeedScroll(boolean fromDraftNeedScroll) {
-        this.fromDraftNeedScroll = fromDraftNeedScroll;
-    }
-
     //控制从草稿进入时，需要滑动的余数
     boolean fromDraftNeedScroll=false;
-
-    public void setFromDraftYuShu(int fromDraftYuShu) {
-        this.fromDraftYuShu = fromDraftYuShu;
-    }
-
     //需要滑动的距离
     int fromDraftYuShu;
     public CutMusicRecycleView(Context context) {
         super(context);
+        Log.e("1234","初始化");
+        init(context);
+    }
+
+    private void init(Context context) {
         this.mContext = context;
         screenWidth = ScreenUtil.getScreenWidth(context);
     }
 
     public CutMusicRecycleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.mContext = context;
-        screenWidth = ScreenUtil.getScreenWidth(context);
+        Log.e("1234","初始化");
+        init(context);
     }
 
     public void setTotalSSS(int totalSSS) {
@@ -117,9 +113,10 @@ public class CutMusicRecycleView extends RecyclerView {
     public void setYushu(int yushu) {
         this.yushu = yushu;
         if (yushu != 0) {
-            timeLineLength = ScreenUtil.getScreenWidth(getContext()) * (mAdapter.getItemCount() - 2) + yushu;
+            Log.e("1234","setYushu  "+(getAdapter() == null));
+            timeLineLength = ScreenUtil.getScreenWidth(getContext()) * (getAdapter().getItemCount() - 2) + yushu;
         } else {
-            timeLineLength = ScreenUtil.getScreenWidth(getContext()) * (mAdapter.getItemCount() - 1);
+            timeLineLength = ScreenUtil.getScreenWidth(getContext()) * (getAdapter().getItemCount() - 1);
         }
     }
 
@@ -128,16 +125,11 @@ public class CutMusicRecycleView extends RecyclerView {
     }
 
     public void setTotalMusic(Long totalMusic) {
-        this.totalMusic = (int) Math.round(totalMusic / 1000D);
+        this.totalMusic =  Math.round(totalMusic);
     }
 
     public void setLinearLayoutManager(CustomLinearLayoutManager linearLayoutManager) {
         this.linearLayoutManager = linearLayoutManager;
-    }
-
-
-    public void setmAdapter(CutMusicRecycleViewAdapter mAdapter) {
-        this.mAdapter = mAdapter;
     }
 
     public void setmScrollChangedListener(ScrollChangedListener mScrollChangedListener) {
@@ -168,9 +160,7 @@ public class CutMusicRecycleView extends RecyclerView {
         totalSSS += dx;
         if (fromDraftNeedScroll){
             fromDraftNeedScroll=false;
-//            smoothScrollBy(fromDraftYuShu,0);
             scrollBy(fromDraftYuShu,0);
-
             onScrollStateChanged(RecyclerView.SCROLL_STATE_IDLE);
         }
         //整数长加上余数
@@ -189,9 +179,11 @@ public class CutMusicRecycleView extends RecyclerView {
     @Override
     public void onScrollStateChanged(int newState) {
         super.onScrollStateChanged(newState);
-        mAdapter.setFirst(false);
+        CutMusicRecycleViewAdapter adapter = (CutMusicRecycleViewAdapter) getAdapter();
+        adapter.setFirst(false);
         isAnimaPause = false;
-//自由滑动时，由于复用机制，会执行动画
+        LogUtil.e("onScrollStateChanged   "+newState);
+        //自由滑动时，由于复用机制，会执行动画
         if (newState == RecyclerView.SCROLL_STATE_SETTLING) {
             clearAnimation_all();
         }
@@ -218,11 +210,11 @@ public class CutMusicRecycleView extends RecyclerView {
             if (viewFirst != null && viewLast != null) {
                 if (scrollState == 0) {
                     //由于缓存，手动刷新前一个item
-                    mAdapter.notifyItemChanged(firstVisibleItemPosition - 1, TAG);
+                    getAdapter().notifyItemChanged(firstVisibleItemPosition - 1, TAG);
                     refreshLayout(viewFirst, viewLast);
                 } else {
-                    mAdapter.notifyItemChanged(firstVisibleItemPosition, TAG);
-                    mAdapter.notifyItemChanged(lastVisibleItemPosition, TAG);
+                    getAdapter().notifyItemChanged(firstVisibleItemPosition, TAG);
+                    getAdapter().notifyItemChanged(lastVisibleItemPosition, TAG);
                     refreshLayout(viewFirst, viewLast);
                 }
             }
@@ -253,6 +245,7 @@ public class CutMusicRecycleView extends RecyclerView {
     }
 
     private void refreshLayout(CustomCutMusicItemView viewFirst, final CustomCutMusicItemView viewLast) {
+        LogUtil.e("refreshLayout");
         int x = Math.abs(getViewInScreenX(viewFirst));
         int x_last = Math.abs(getViewInScreenX(viewLast));
         mScrollChangedListener.scrollChange(x, firstVisibleItemPosition);
@@ -288,6 +281,34 @@ public class CutMusicRecycleView extends RecyclerView {
 
             }
         });
+        animator_last.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if(animator_first !=null){
+                    animator_first.start();
+                }
+                if (viewLast != null) {
+                    viewLast.setSrcW(0);
+                    viewLast.setType(0);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animator_first.start();
     }
 
     /**
@@ -303,9 +324,10 @@ public class CutMusicRecycleView extends RecyclerView {
         return x;
     }
 
-    private ObjectAnimator moveView(final CustomCutMusicItemView view, final String attr, int start, int end, long duration) {
+    public ObjectAnimator moveView(final CustomCutMusicItemView view, final String attr, int start, int end, long duration) {
         ObjectAnimator move = ObjectAnimator.ofInt(view, attr, start, end);
         move.setDuration(duration);
+        LogUtil.e("setDuration      "+duration);
         move.setInterpolator(new LinearInterpolator());
         return move;
     }
@@ -314,6 +336,8 @@ public class CutMusicRecycleView extends RecyclerView {
     public void pauseAnimation() {
         if (animator_first != null) {
             animator_first.pause();
+        }
+        if (animator_last !=null){
             animator_last.pause();
         }
     }
@@ -322,6 +346,8 @@ public class CutMusicRecycleView extends RecyclerView {
     public void resumeAnimation() {
         if (animator_first != null) {
             animator_first.resume();
+        }
+        if (animator_last !=null){
             animator_last.resume();
         }
     }

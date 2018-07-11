@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activity.MusicCutActivity">
-
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
