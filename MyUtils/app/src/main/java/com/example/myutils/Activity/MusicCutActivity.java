@@ -34,14 +34,14 @@ import static com.example.myutils.Utils.ScreenUtil.getScreenWidth;
  * @author 27982
  */
 public class MusicCutActivity extends AppCompatActivity {
-    //假设一屏是20毫秒
+    //假设一屏是20秒  单位：毫秒
     public static final long onePice = 20 * 1000;
     @BindView(R.id.music_recyclerView)
     CutMusicRecycleView mRecyclerView;
     @BindView(R.id.button2)
     Button button;
     MediaPlayer player = null;
-    //毫秒
+    //单位：毫秒
     long totalLength;
     List mDatas;
     CustomLinearLayoutManager linearLayoutManager;
@@ -100,23 +100,9 @@ public class MusicCutActivity extends AppCompatActivity {
 
             @Override
             public void scrollChange(int widght, int position) {
-                //当前位置超出屏幕范围  当前位置
-                //当前位置代表的秒数
-//                long secondDruing = (long) (m_timeline.getDuration() / 1000D);
-//                long min = position * secondDruing + widght * secondDruing / getScreenWidth(getApplicationContext());
-//                //TODO 本地音乐需要，到时候要做区分，但是本地音乐逻辑之前是layout，不知道会不会改成activity，所以暂时不做兼容
-////                long trimIn = (long) min + m_musicTrimIn;
-//                long trimIn = min;
-//                if (m_selectedMusic == null)
-//                    return;
-//                m_selectedMusic.setTrimIn(trimIn);
-//                m_trimInTextView.setText(Util.formatTime((long) min));
-//                TimelineData.instance().setM_music(m_selectedMusic);
-//                Util.resetMusic(m_videoTrack, m_musicTrack);
-//                playVideo(0);
+                //两个参数：当前位置超出屏幕范围  当前位置  根据位置和大小可以换算成时间，剩下的就是业务逻辑了。
             }
         });
-        Log.e("1234", "第一个view：  " + (mAdapter.getView_position0() != null));
         if (mAdapter != null && mAdapter.getView_position0() != null) {
             CustomCutMusicItemView view = mAdapter.getView_position0();
             ObjectAnimator animator_first = mRecyclerView.moveView(view, "srcW", 0, view.getWidth(), onePice);
@@ -125,7 +111,6 @@ public class MusicCutActivity extends AppCompatActivity {
         mRecyclerView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
             @Override
             public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                Log.e("1234", "第一个view：  " + (mAdapter.getView_position0() != null));
                 return null;
             }
         });
