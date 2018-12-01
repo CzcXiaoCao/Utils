@@ -6,5 +6,6 @@
         <item>DataBinding</item>
 
         <item>仿抖音音乐裁剪</item>
+        <item>网络框架-下载(还没加读写权限)</item>
     </string-array>
 </resources>

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.myutils.Activity.DataBindingActivity;
+import com.example.myutils.Activity.HttpActivity;
 import com.example.myutils.Activity.MusicCutActivity;
 import com.example.myutils.Utils.CommonRecyclerAdapter;
 import com.example.myutils.Utils.ViewHolder;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
  * Created by CaoZhiChao on 2018/6/25 11:23
  */
 public class MainActivity extends AppCompatActivity implements CommonRecyclerAdapter.OnItemClickListener {
+    private final String TAG = "MainActivity";
     List<String> listOfActivityName = new ArrayList<>();
     @BindView(R.id.activity_RecyclerView)
     RecyclerView recyclerView;
@@ -47,13 +49,11 @@ public class MainActivity extends AppCompatActivity implements CommonRecyclerAda
         String[] activityNames = getResources().getStringArray(R.array.activityNames);
         for (int i = 0; i < activityNames.length; i++) {
             listOfActivityName.add(activityNames[i]);
-            Log.e("1234", "--  " + activityNames[i]);
         }
     }
 
     @Override
     public void onItemClick(int pos) {
-        Log.e("1234","点击："+pos);
         switch (pos) {
             case 0:
                 startActivity(DataBindingActivity.class);
@@ -61,7 +61,11 @@ public class MainActivity extends AppCompatActivity implements CommonRecyclerAda
             case 1:
                 startActivity(MusicCutActivity.class);
                 break;
+            case 2:
+                startActivity(HttpActivity.class);
+                break;
             default:
+                Log.e(TAG, "onItemClick: " + pos + "还没有处理点击事件！");
                 break;
         }
     }
@@ -81,8 +85,9 @@ public class MainActivity extends AppCompatActivity implements CommonRecyclerAda
             nameTv.setText((String) item);
         }
     }
-    private void startActivity(Class activityClass){
-        startActivity(new Intent(MainActivity.this,activityClass));
+
+    private void startActivity(Class activityClass) {
+        startActivity(new Intent(MainActivity.this, activityClass));
     }
 }
 
