@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.DataBindingActivity" />
-        <activity android:name=".Activity.MusicCutActivity"></activity>
+        <activity android:name=".Activity.MusicCutActivity" />
+        <activity android:name=".Activity.HttpActivity"></activity>
     </application>
 
 </manifest>
