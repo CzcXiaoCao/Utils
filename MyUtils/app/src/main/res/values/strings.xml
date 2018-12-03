@@ -6,6 +6,8 @@
         <item>DataBinding</item>
 
         <item>仿抖音音乐裁剪</item>
-        <item>网络框架-下载(还没加读写权限)</item>
+        <item>网络框架-下载</item>
+        <item>Meida资源选择(多个、多选)</item>
+        <item>Meida资源选择(单选)</item>
     </string-array>
 </resources>

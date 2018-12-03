@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MeidaLibrary</string>
+    <string-array name="select_media">
+        <item>所有内容</item>
+        <item>视频</item>
+        <item>图片</item>
+    </string-array>
+</resources>

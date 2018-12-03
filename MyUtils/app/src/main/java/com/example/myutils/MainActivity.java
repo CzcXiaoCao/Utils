@@ -1,5 +1,6 @@
 package com.example.myutils;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.meidalibrary.SelectMediaActivity;
+import com.example.meidalibrary.SingleClickActivity;
 import com.example.myutils.Activity.DataBindingActivity;
 import com.example.myutils.Activity.HttpActivity;
 import com.example.myutils.Activity.MusicCutActivity;
@@ -24,7 +27,7 @@ import butterknife.ButterKnife;
 /**
  * Created by CaoZhiChao on 2018/6/25 11:23
  */
-public class MainActivity extends AppCompatActivity implements CommonRecyclerAdapter.OnItemClickListener {
+public class MainActivity extends MPermissionsActivity implements CommonRecyclerAdapter.OnItemClickListener {
     private final String TAG = "MainActivity";
     List<String> listOfActivityName = new ArrayList<>();
     @BindView(R.id.activity_RecyclerView)
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements CommonRecyclerAda
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+
+        requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x0002);
     }
 
     private void initData() {
@@ -63,6 +68,12 @@ public class MainActivity extends AppCompatActivity implements CommonRecyclerAda
                 break;
             case 2:
                 startActivity(HttpActivity.class);
+                break;
+            case 3:
+                startActivity(SelectMediaActivity.class);
+                break;
+            case 4:
+                startActivity(SingleClickActivity.class);
                 break;
             default:
                 Log.e(TAG, "onItemClick: " + pos + "还没有处理点击事件！");
