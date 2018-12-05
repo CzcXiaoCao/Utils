@@ -1,1 +1,1 @@
-include ':app', ':httplibrary', ':medialibrary'
+include ':app', ':httplibrary', ':medialibrary', ':annotions', ':complies'

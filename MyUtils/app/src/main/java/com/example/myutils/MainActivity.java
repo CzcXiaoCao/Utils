@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,12 +16,11 @@ import com.example.myutils.Activity.HttpActivity;
 import com.example.myutils.Activity.MusicCutActivity;
 import com.example.myutils.Utils.CommonRecyclerAdapter;
 import com.example.myutils.Utils.ViewHolder;
+import com.example.myutils.annotationUtil.Bind;
+import com.zhujie.annotions.BindView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by CaoZhiChao on 2018/6/25 11:23
@@ -30,7 +28,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends MPermissionsActivity implements CommonRecyclerAdapter.OnItemClickListener {
     private final String TAG = "MainActivity";
     List<String> listOfActivityName = new ArrayList<>();
-    @BindView(R.id.activity_RecyclerView)
+    @BindView(id = R.id.activity_RecyclerView)
     RecyclerView recyclerView;
     MyAdapter adapter;
 
@@ -38,7 +36,7 @@ public class MainActivity extends MPermissionsActivity implements CommonRecycler
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        Bind.bindView(this);
         initData();
         adapter = new MyAdapter(this, listOfActivityName, R.layout.item_main);
         adapter.setOnItemClickListener(this);

@@ -8,7 +8,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/annotions" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/complies" />
             <option value="$PROJECT_DIR$/httplibrary" />
             <option value="$PROJECT_DIR$/medialibrary" />
           </set>

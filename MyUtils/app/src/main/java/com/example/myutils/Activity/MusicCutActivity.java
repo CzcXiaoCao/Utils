@@ -8,7 +8,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowInsets;
 import android.widget.Button;
@@ -19,14 +18,13 @@ import com.example.myutils.Views.MusicCutLikeDouYin.CustomCutMusicItemView;
 import com.example.myutils.Views.MusicCutLikeDouYin.CustomLinearLayoutManager;
 import com.example.myutils.Views.MusicCutLikeDouYin.CutMusicRecycleView;
 import com.example.myutils.Views.MusicCutLikeDouYin.CutMusicRecycleViewAdapter;
+import com.example.myutils.annotationUtil.Bind;
+import com.zhujie.annotions.BindView;
+import com.zhujie.annotions.OnClick;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static com.example.myutils.Utils.ScreenUtil.getScreenWidth;
 
@@ -36,9 +34,9 @@ import static com.example.myutils.Utils.ScreenUtil.getScreenWidth;
 public class MusicCutActivity extends AppCompatActivity {
     //假设一屏是20秒  单位：毫秒
     public static final long onePice = 20 * 1000;
-    @BindView(R.id.music_recyclerView)
+    @BindView(id = R.id.music_recyclerView)
     CutMusicRecycleView mRecyclerView;
-    @BindView(R.id.button2)
+    @BindView(id = R.id.button2)
     Button button;
     MediaPlayer player = null;
     //单位：毫秒
@@ -52,7 +50,7 @@ public class MusicCutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_cut);
-        ButterKnife.bind(this);
+        Bind.bindView(this);
     }
 
     @Override
